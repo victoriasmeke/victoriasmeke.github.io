@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Victoria Smeke Estudio</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--cream:#F5F2EE;--dark:#1A1A18;--mid:#6B6860;--light:#E8E4DE;--accent:#9B8B7A}
+html{scroll-behavior:smooth}
+body{background:var(--cream);color:var(--dark);font-family:'Montserrat',sans-serif;font-weight:300;overflow-x:hidden}
+
+.es-text{display:none}
+.en-text{display:none}
+body.lang-es .es-text{display:block}
+body.lang-en .en-text{display:block}
+body.lang-es .es-inline{display:inline}
+body.lang-en .en-inline{display:inline}
+.es-inline{display:none}
+.en-inline{display:none}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:2rem 4rem;display:flex;justify-content:space-between;align-items:center}
+nav.scrolled{background:rgba(245,242,238,0.95);backdrop-filter:blur(8px)}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:400;letter-spacing:0.15em;color:white;text-decoration:none;transition:color 0.3s}
+nav.scrolled .nav-logo{color:var(--dark)}
+.nav-links{display:flex;gap:3rem;list-style:none}
+.nav-links a{font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:white;text-decoration:none;opacity:0.8;transition:opacity 0.3s,color 0.3s}
+nav.scrolled .nav-links a{color:var(--dark)}
+.nav-links a:hover{opacity:1}
+.lang-toggle{font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:white;cursor:pointer;border:1px solid rgba(255,255,255,0.4);background:none;font-family:'Montserrat',sans-serif;padding:0.4rem 0.8rem;transition:color 0.3s,border-color 0.3s}
+nav.scrolled .lang-toggle{color:var(--dark);border-color:rgba(0,0,0,0.2)}
+
+.hero{height:100vh;position:relative;overflow:hidden;display:flex;align-items:flex-end}
+.hero-bg{position:absolute;inset:0;background-color:#2a2a28}
+.hero-bg img{width:100%;height:100%;object-fit:cover;opacity:0.7}
+.hero-content{position:relative;z-index:2;padding:5rem 4rem;color:white}
+.hero-eyebrow{font-size:0.65rem;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.7);margin-bottom:1.5rem}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3.5rem,8vw,7rem);font-weight:300;line-height:0.95;letter-spacing:-0.02em;margin-bottom:2rem;color:white}
+.hero-title em{font-style:italic}
+.hero-sub{font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.65);max-width:320px;line-height:2.2}
+.hero-scroll{position:absolute;bottom:3rem;right:4rem;display:flex;flex-direction:column;align-items:center;gap:0.5rem;color:white;opacity:0.5}
+.hero-scroll span{font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;writing-mode:vertical-lr}
+.scroll-line{width:1px;height:60px;background:white;transform-origin:top;animation:scrollLine 2s ease-in-out infinite}
+@keyframes scrollLine{0%{transform:scaleY(0);opacity:1}100%{transform:scaleY(1);opacity:0}}
+
+section{padding:8rem 4rem}
+.section-label{font-size:0.6rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--accent);margin-bottom:4rem;display:flex;align-items:center;gap:2rem}
+.section-label::after{content:'';flex:1;height:1px;background:var(--light)}
+
+.projects-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--light);margin:0;overflow:hidden}
+.project-item{background:var(--cream);overflow:hidden;cursor:pointer;position:relative}
+.project-item.full{grid-column:1/-1;height:70vh}
+.project-item.half{height:50vh}
+.project-img{width:100%;height:100%;object-fit:cover;transition:transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94);filter:brightness(0.75)}
+.project-item:hover .project-img{transform:scale(1.03)}
+.project-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.75) 0%,transparent 55%);display:flex;flex-direction:column;justify-content:flex-end;padding:3rem 4rem}
+.project-tag{font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.65);margin-bottom:0.75rem}
+.project-name{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3vw,2.8rem);font-weight:300;color:white;line-height:1.1}
+.project-location{font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-top:0.5rem}
+
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:8rem;align-items:center}
+.about-img-wrap{position:relative}
+.about-img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top}
+.about-img-accent{position:absolute;bottom:-2rem;right:-2rem;width:60%;aspect-ratio:1;border:1px solid var(--light)}
+.about-heading{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,4vw,3.8rem);font-weight:300;line-height:1.1;margin-bottom:2rem;color:var(--dark)}
+.about-heading em{font-style:italic;color:var(--accent)}
+.about-body{font-size:0.85rem;line-height:2.2;color:var(--mid);margin-bottom:3rem}
+.about-detail{font-size:0.7rem;letter-spacing:0.1em;color:var(--dark);line-height:2.5;border-top:1px solid var(--light);padding-top:2rem}
+
+.recognition-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--light);margin:0}
+.recognition-item{background:var(--cream);padding:3rem 4rem}
+.rec-number{font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:300;color:var(--light);margin-bottom:1rem}
+.rec-title{font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--dark);margin-bottom:0.75rem;font-weight:400}
+.rec-detail{font-size:0.75rem;color:var(--mid);line-height:2}
+.rec-badge{display:inline-block;margin-top:1.5rem;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);border:1px solid var(--light);padding:0.4rem 1rem}
+
+.contact-section{background:var(--dark);padding:8rem 4rem}
+.contact-heading{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,6vw,5rem);font-weight:300;line-height:1.1;margin-bottom:1rem;color:var(--cream)}
+.contact-heading em{font-style:italic;color:var(--accent)}
+.contact-sub{font-size:0.75rem;letter-spacing:0.1em;color:rgba(245,242,238,0.45);margin-bottom:5rem;max-width:400px;line-height:2.2}
+.contact-links{display:flex;gap:6rem;flex-wrap:wrap}
+.contact-link-label{font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(245,242,238,0.35);margin-bottom:0.75rem}
+.contact-link-value{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:300;color:var(--cream);text-decoration:none;border-bottom:1px solid rgba(245,242,238,0.2);padding-bottom:0.25rem;display:block;transition:border-color 0.3s,color 0.3s}
+.contact-link-value:hover{border-color:var(--accent);color:var(--accent)}
+
+footer{padding:2rem 4rem;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--light)}
+.footer-copy{font-size:0.65rem;letter-spacing:0.1em;color:var(--mid)}
+.footer-ig{font-size:0.65rem;letter-spacing:0.1em;color:var(--mid);text-decoration:none}
+
+.fade-in{opacity:0;transform:translateY(30px);transition:opacity 0.9s ease,transform 0.9s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:900px){
+  nav{padding:1.5rem 2rem}
+  .nav-links{display:none}
+  section{padding:5rem 1.5rem}
+  .hero-content{padding:3rem 1.5rem}
+  .about-grid{grid-template-columns:1fr;gap:3rem}
+  .recognition-grid{grid-template-columns:1fr}
+  .contact-links{flex-direction:column;gap:3rem}
+  .projects-grid{grid-template-columns:1fr}
+  .project-item.full,.project-item.half{grid-column:1;height:55vw;min-height:220px}
+  .projects-grid{margin:0 -1.5rem}
+  .recognition-grid{margin:0 -1.5rem}
+  .recognition-item{padding:2.5rem 1.5rem}
+  .project-name{font-size:1.6rem}
+  .hero-title{font-size:clamp(2.8rem,10vw,5rem)}
+  .about-img-accent{display:none}
+  .recognition-item{padding:2rem 2rem}
+  .contact-section{padding:5rem 1.5rem}
+}
+</style>
+</head>
+<body class="lang-es">
+
+<nav id="nav">
+  <a href="#" class="nav-logo">VS</a>
+  <ul class="nav-links">
+    <li><a href="#proyectos"><span class="es-inline">Proyectos</span><span class="en-inline">Projects</span></a></li>
+    <li><a href="#nosotros"><span class="es-inline">Estudio</span><span class="en-inline">Studio</span></a></li>
+    <li><a href="#reconocimientos"><span class="es-inline">Reconocimientos</span><span class="en-inline">Recognition</span></a></li>
+    <li><a href="#contacto"><span class="es-inline">Contacto</span><span class="en-inline">Contact</span></a></li>
+  </ul>
+  <button class="lang-toggle" onclick="toggleLang()" id="lang-btn">EN</button>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg">
+    <!-- REEMPLAZA ESTA URL CON TU FOTO 37_ITAMBE -->
+    <img src="hero.jpg" alt="Victoria Smeke Estudio">
+  </div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Victoria Smeke Estudio · CDMX</p>
+    <h1 class="hero-title">
+      <span class="es-text">Espacios<br>que no se<br><em>olvidan.</em></span>
+      <span class="en-text">Spaces<br>that are not<br><em>forgotten.</em></span>
+    </h1>
+    <p class="hero-sub">
+      <span class="es-text">Arquitectura · Diseño · Construcción<br>Desde el primer trazo hasta la última piedra.</span>
+      <span class="en-text">Architecture · Design · Construction<br>From the first sketch to the last stone.</span>
+    </p>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<section id="proyectos" style="padding:8rem 0">
+  <div style="padding:0 4rem" class="fade-in">
+    <div class="section-label">
+      <span class="es-inline">Proyectos Seleccionados</span>
+      <span class="en-inline">Selected Projects</span>
+    </div>
+  </div>
+  <div class="projects-grid">
+    <div class="project-item full fade-in">
+      <!-- REEMPLAZA CON FOTO ITAMBE EXTERIOR NOCTURNO #5 -->
+      <img class="project-img" src="itambe.jpg" alt="Casa Itambe">
+      <div class="project-overlay">
+        <p class="project-tag"><span class="es-inline">Residencial · Construido</span><span class="en-inline">Residential · Built</span></p>
+        <h3 class="project-name">Casa Itambe</h3>
+        <p class="project-location">CDMX, México</p>
+      </div>
+    </div>
+    <div class="project-item half fade-in">
+      <!-- REEMPLAZA CON FOTO ABR1412 2B -->
+      <img class="project-img" src="abr1412.jpg" alt="ABR1412">
+      <div class="project-overlay">
+        <p class="project-tag"><span class="es-inline">Departamento · Construido</span><span class="en-inline">Apartment · Built</span></p>
+        <h3 class="project-name">ABR 1412</h3>
+        <p class="project-location">CDMX, México</p>
+      </div>
+    </div>
+    <div class="project-item half fade-in">
+      <!-- REEMPLAZA CON FOTO DUBAI EXTERIOR 3 -->
+      <img class="project-img" src="dubai.png" alt="Dubai">
+      <div class="project-overlay">
+        <p class="project-tag">House of the Future · Top 10 Mundial</p>
+        <h3 class="project-name">Dubai</h3>
+        <p class="project-location">Dubai, UAE</p>
+      </div>
+    </div>
+    <div class="project-item half fade-in">
+      <!-- REEMPLAZA CON FOTO LAS VENTANAS -->
+      <img class="project-img" src="lasventanas.png" alt="Las Ventanas">
+      <div class="project-overlay">
+        <p class="project-tag"><span class="es-inline">Hospitalidad · Diseño</span><span class="en-inline">Hospitality · Design</span></p>
+        <h3 class="project-name">Las Ventanas</h3>
+        <p class="project-location">CDMX, México</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="nosotros">
+  <div class="section-label fade-in">
+    <span class="es-inline">El Estudio</span><span class="en-inline">The Studio</span>
+  </div>
+  <div class="about-grid">
+    <div class="about-img-wrap fade-in">
+      <!-- REEMPLAZA CON TU RETRATO 138 -->
+      <img class="about-img" src="retrato.jpg" alt="Victoria Smeke">
+      <div class="about-img-accent"></div>
+    </div>
+    <div class="about-text fade-in">
+      <h2 class="about-heading">
+        <span class="es-text">Cada <em>espacio,</em><br>una historia.</span>
+        <span class="en-text">Every <em>space,</em><br>a new story.</span>
+      </h2>
+      <p class="about-body">
+        <span class="es-text">Antes de trazar una sola línea, escuchamos.<br><br>Tu rutina, tu familia, cómo recibes a la gente, qué necesitas al despertar. Todo eso se convierte en arquitectura.<br><br>El resultado: un espacio inconfundiblemente tuyo. Que te recibe, te guía, te sorprende. Donde cada material, cada luz, cada centímetro existe por una razón.<br><br><em>No diseñamos casas. Diseñamos la forma en que vas a vivir.</em></span>
+        <span class="en-text">Before a single line is drawn, we listen.<br><br>Your daily rhythm, your family, the way you live — all of it becomes the foundation of the design.<br><br>The result is a space that feels unmistakably yours. One that welcomes you, surprises you, and makes sense at every turn. Where every material, every detail, every centimeter is there for a reason.<br><br><em>We don't design houses. We design the way you live.</em></span>
+      </p>
+      <div class="about-detail">
+        <span class="es-text">Arquitectura residencial · Diseño de interiores · Construcción<br>Ciudad de México · México</span>
+        <span class="en-text">Residential architecture · Interior design · Construction<br>Mexico City · Mexico</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="reconocimientos" style="padding:8rem 0">
+  <div style="padding:0 4rem" class="fade-in">
+    <div class="section-label">
+      <span class="es-inline">Reconocimientos</span><span class="en-inline">Recognition</span>
+    </div>
+  </div>
+  <div class="recognition-grid">
+    <div class="recognition-item fade-in">
+      <div class="rec-number">01</div>
+      <div class="rec-title">House of the Future</div>
+      <p class="rec-detail">
+        <span class="es-text">Competencia internacional de arquitectura · Dubai, UAE<br>Top 10 entre más de 500 propuestas de todo el mundo.</span>
+        <span class="en-text">An international architecture competition held in Dubai. This project represented Mexico among the global top 10.</span>
+      </p>
+      <span class="rec-badge">Top 10 Mundial</span>
+    </div>
+    <div class="recognition-item fade-in">
+      <div class="rec-number">02</div>
+      <div class="rec-title">Arquitectos Mexicanos 2026</div>
+      <p class="rec-detail">
+        <span class="es-text">Publicación de referencia para la arquitectura mexicana contemporánea.</span>
+        <span class="en-text">The definitive publication on contemporary Mexican architecture.</span>
+      </p>
+      <span class="rec-badge"><span class="es-inline">Próximamente</span><span class="en-inline">Coming soon</span></span>
+    </div>
+    <div class="recognition-item fade-in">
+      <div class="rec-number">03</div>
+      <div class="rec-title">México Design · Ed. 68</div>
+      <p class="rec-detail">
+        <span class="es-text">"Espacio" · Publicación especializada en diseño mexicano contemporáneo.</span>
+        <span class="en-text">"Space" — a feature in Mexico's leading design publication.</span>
+      </p>
+      <span class="rec-badge"><span class="es-inline">Publicado</span><span class="en-inline">Published</span></span>
+    </div>
+  </div>
+</section>
+
+<div class="contact-section" id="contacto">
+  <h2 class="contact-heading fade-in">
+    <span class="es-text">Hablemos de<br>tu <em>próximo</em><br>proyecto.</span>
+    <span class="en-text">Let's talk about<br>your <em>next</em><br>project.</span>
+  </h2>
+  <p class="contact-sub fade-in">
+    <span class="es-text">No acepto lo ordinario — y busco clientes que tampoco.</span>
+    <span class="en-text">We don't do ordinary — and neither do our clients.</span>
+  </p>
+  <div class="contact-links fade-in">
+    <div class="contact-link-group">
+      <p class="contact-link-label">Email</p>
+      <a href="mailto:hola@victoriasmeke.com" class="contact-link-value">hola@victoriasmeke.com</a>
+    </div>
+    <div class="contact-link-group">
+      <p class="contact-link-label"><span class="es-inline">Agenda una llamada</span><span class="en-inline">Schedule a call</span></p>
+      <a href="https://calendly.com/victoriasmeke" target="_blank" class="contact-link-value">Calendly</a>
+    </div>
+    <div class="contact-link-group">
+      <p class="contact-link-label">Instagram</p>
+      <a href="https://instagram.com/victoria.smeke" class="contact-link-value">@victoria.smeke</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p class="footer-copy">© 2026 Victoria Smeke Estudio · CDMX</p>
+  <a href="https://instagram.com/victoria.smeke" class="footer-ig">@victoria.smeke</a>
+</footer>
+
+<script>
+function toggleLang(){
+  const body=document.body;
+  const btn=document.getElementById('lang-btn');
+  if(body.classList.contains('lang-es')){
+    body.classList.remove('lang-es');
+    body.classList.add('lang-en');
+    btn.textContent='ES';
+  }else{
+    body.classList.remove('lang-en');
+    body.classList.add('lang-es');
+    btn.textContent='EN';
+  }
+}
+window.addEventListener('scroll',()=>{
+  const nav=document.getElementById('nav');
+  if(window.scrollY>50)nav.classList.add('scrolled');
+  else nav.classList.remove('scrolled');
+});
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
+},{threshold:0.1});
+document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
+</script>
+</body>
+</html>
